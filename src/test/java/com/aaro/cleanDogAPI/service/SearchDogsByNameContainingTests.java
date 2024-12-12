@@ -19,6 +19,7 @@ public class SearchDogsByNameContainingTests {
     // arrange
     var existingDogs = new ArrayList<Dog>();
     existingDogs.add(new Dog(1L, "Dogs full name", "Irrelevant", 10));
+    existingDogs.add(new Dog(2L, "Another name", "Irrelevant", 10));
     InMemoryDogRepository repository = new InMemoryDogRepository(existingDogs);
     DogService sut = new DogService(repository);
 
@@ -31,5 +32,27 @@ public class SearchDogsByNameContainingTests {
     assertNotNull(response);
     assertEquals(1, response.getDogs().size());
     assertEquals("Dogs full name", response.getDogs().getFirst().name());
+  }
+
+  @Test
+  public void searchDogsByNamesStartingWithCaseInsensitive() {
+    // arrange
+    var existingDogs = new ArrayList<Dog>();
+    existingDogs.add(new Dog(1L, "A name", "Irrelevant", 10));
+    existingDogs.add(new Dog(2L, "Another name", "Irrelevant", 10));
+    existingDogs.add(new Dog(3L, "But wait - another name", "Irrelevant", 10));
+    InMemoryDogRepository repository = new InMemoryDogRepository(existingDogs);
+    DogService sut = new DogService(repository);
+
+    var request = new FindDogByNameRequest("a");
+
+    // act
+    FindDogByNameResponse response = sut.findDogByName(request);
+
+    // assert
+    assertNotNull(response);
+    assertEquals(2, response.getDogs().size());
+    assertEquals("A name", response.getDogs().getFirst().name());
+    assertEquals("Another name", response.getDogs().getLast().name());
   }
 }

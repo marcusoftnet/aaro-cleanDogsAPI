@@ -54,10 +54,14 @@ public class DogService {
     List<DogDTO> dogs = repository
       .findAll()
       .stream()
-      .filter(dog -> dog.getName().contains(request.name()))
+      .filter(dog -> nameStartsWith(request, dog))
       .map(DogDTO::fromDog)
       .toList();
 
     return new FindDogByNameResponse(dogs);
+  }
+
+  private static boolean nameStartsWith(FindDogByNameRequest request, Dog dog) {
+    return dog.getName().toLowerCase().startsWith(request.name().toLowerCase());
   }
 }
