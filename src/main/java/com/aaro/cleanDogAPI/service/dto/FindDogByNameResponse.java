@@ -11,4 +11,7 @@ import java.util.List;
 @Data
 public class FindDogByNameResponse {
   private List<DogDTO> dogs;
+  public Integer getNumberOfResults() {
+    return dogs.size();
+  }
 }

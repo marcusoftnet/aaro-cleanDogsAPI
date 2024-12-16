@@ -8,10 +8,10 @@ import java.util.List;
 import java.util.Optional;
 
 public class InMemoryDogRepository implements DogRepository {
-  private final ArrayList<Dog> dogs;
+  private final ArrayList<Dog> dogs = new ArrayList<>();
 
   public InMemoryDogRepository(ArrayList<Dog> dogs) {
-    this.dogs = dogs;
+    this.dogs.addAll(dogs);
   }
 
   public Long nextId() { return (long) dogs.size() + 1; }

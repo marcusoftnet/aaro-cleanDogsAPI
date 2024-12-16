@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @RestController
 @RequestMapping("/api/v1/dogs")
@@ -16,9 +18,13 @@ import java.net.URI;
 public class DogController {
   private final DogService dogService;
 
+  private final static  Logger logger = Logger.getLogger(DogController.class.getName());
+
   @PostMapping
   public ResponseEntity<?> createNewDog(@RequestBody CreateDogRequest request) {
     try {
+      logger.info("######################################");
+      logger.info(request.toString());
       CreateDogResponse response = dogService.createNewDog(request);
 
       return ResponseEntity
@@ -26,6 +32,7 @@ public class DogController {
         .location(createLocationUri(response))
         .body(response);
     } catch (IllegalArgumentException e) {
+      logger.info(e.getMessage());
       return ResponseEntity
         .status(HttpStatus.BAD_REQUEST)
         .body(e.getMessage());

@@ -1,8 +1,6 @@
 package com.aaro.cleanDogAPI.service;
 
 import com.aaro.cleanDogAPI.entities.Dog;
-import com.aaro.cleanDogAPI.service.dto.DeleteDogByIdRequest;
-import com.aaro.cleanDogAPI.service.dto.DeleteDogByIdResponse;
 import com.aaro.cleanDogAPI.service.dto.FindDogByNameRequest;
 import com.aaro.cleanDogAPI.service.dto.FindDogByNameResponse;
 import org.junit.jupiter.api.Test;
@@ -30,7 +28,7 @@ public class SearchDogsByNameContainingTests {
 
     // assert
     assertNotNull(response);
-    assertEquals(1, response.getDogs().size());
+    assertEquals(1, response.getNumberOfResults());
     assertEquals("Dogs full name", response.getDogs().getFirst().name());
   }
 
@@ -51,7 +49,7 @@ public class SearchDogsByNameContainingTests {
 
     // assert
     assertNotNull(response);
-    assertEquals(2, response.getDogs().size());
+    assertEquals(2, response.getNumberOfResults());
     assertEquals("A name", response.getDogs().getFirst().name());
     assertEquals("Another name", response.getDogs().getLast().name());
   }
